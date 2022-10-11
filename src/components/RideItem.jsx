@@ -6,9 +6,9 @@ const RideItem = (props) => {
     return (
         <div className="ride">
             <div className="ride__info">
-                <strong>{props.ride.id}. {props.ride.number} | {props.ride.date} | {props.ride.price} руб.</strong>
+                <strong>{props.id}. {props.iride.number} | {props.iride.date} | {props.iride.price} руб.</strong>
                 <div>
-                    {props.ride.car} - {props.ride.driver}
+                    {props.iride.car} - {props.iride.driver}
                 </div>
             </div>
             <div className="ride__btns">

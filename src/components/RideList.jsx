@@ -1,14 +1,14 @@
 import React from 'react';
 import RideItem from "./RideItem";
 
-const RideList = ({rides, title}) => {
+const RideList = ({orders, title}) => {
     return (
         <div>
             <h3 style={{ textAlign: 'center'}}>
                 {title}:
             </h3>
-            {rides.map(ride =>
-                <RideItem ride={ride} key={ride.id}/>
+            {orders.map( (xride, index) =>
+                <RideItem id={index + 1} iride={xride} key={xride.id}/>
             )}
         </div>
     );
