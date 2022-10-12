@@ -21,5 +21,22 @@
     margin-top: 15px;
     justify-content: space-between;
     align-items: center;
+}
+.remove-btn {
+    margin-right: 0.5rem;
+}
 
+.ride-enter {
+    transform: translateX(-350px)
+}
+.ride-enter-active {
+    transform: translateX(0px);
+    transition: all 500ms ease-in;
+}
+.ride-exit {
+    opacity: 1;
+}
+.ride-exit-active {
+    transform: translateX(-350px);
+    transition: all 500ms ease-in;
 }

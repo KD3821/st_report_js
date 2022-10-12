@@ -16,7 +16,8 @@ const RideFilter = ({filter, setFilter} ) => {
                 defaultValue="Сортировать по"
                 options={[
                     {value: 'driver', name: 'По водителю'},
-                    {value: 'car', name: 'По авто'}
+                    {value: 'car', name: 'По авто'},
+                    {value: 'date', name: 'По дате'}
                 ]}
             />
         </div>
