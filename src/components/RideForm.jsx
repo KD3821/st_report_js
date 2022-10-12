@@ -58,7 +58,7 @@ const RideForm = ({create}) => {
                 type="text"
                 placeholder="Cтоимость"
             />
-            <MyButton onClick={addNewRide} style={{width: '30%', backgroundColor: 'lightgrey'}}>Добавить поездку</MyButton>
+            <MyButton onClick={addNewRide} style={{backgroundColor: 'lightgrey'}}>Добавить поездку</MyButton>
         </form>
     )
 }

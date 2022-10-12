@@ -3,6 +3,8 @@ import './styles/App.css';
 import RideList from "./components/RideList";
 import RideForm from "./components/RideForm";
 import RideFilter from "./components/RideFilter";
+import MyModal from "./components/UI/MyModal/MyModal";
+import MyButton from "./components/UI/button/MyButton";
 
 function App() {
     const [rides, setRides] = useState([
@@ -12,6 +14,7 @@ function App() {
     ])
 
     const [filter, setFilter] = useState({ sort: '', query: ''})
+    const [modal, setModal] = useState(false);
 
     const sortedRides = useMemo( () => {
         console.log('работает сортировка')
@@ -28,6 +31,7 @@ function App() {
 
     const createRide = (newRide) => {
         setRides([...rides, newRide])
+        setModal(false)
     }
     const removeRide = (ride) => {
         setRides(rides.filter(r => r.id !== ride.id))
@@ -35,7 +39,12 @@ function App() {
 
     return (
         <div className="App">
-            <RideForm create={createRide}/>
+            <MyButton style={{marginTop: 30}} onClick={() => setModal(true)}>
+                Создать поездку
+            </MyButton>
+            <MyModal visible={modal} setVisible={setModal}>
+                <RideForm create={createRide}/>
+            </MyModal>
             <hr style={{margin: '15px 0'}}/>
             <RideFilter
                 filter={filter}
