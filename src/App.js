@@ -9,16 +9,29 @@ import {useRides} from "./hooks/useRides";
 import RideService from "./API/RideService";
 import Loader from "./components/UI/Loader/Loader";
 import {useFetching} from "./hooks/useFetching";
+import {getPageCount, getPagesArray} from "./utils/pages";
 
 function App() {
     const [rides, setRides] = useState([])
     const [filter, setFilter] = useState({ sort: '', query: ''})
     const [modal, setModal] = useState(false);
+    const [totalPages, setTotalPages] = useState(0);
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const [nextPage, setNextPage] = useState(null);
+    const [prevPage, setPrevPage] = useState(null);
     const sortedAndSearchedRides = useRides(rides, filter.sort, filter.query);
+    let pagesArray = getPagesArray(totalPages)
+
     const [fetchRides, isRideListLoading, rideError] = useFetching( async () => {
-        const rides = await RideService.getAll();
-        setRides(rides)
+        const response = await RideService.getAll();
+        setRides(response.data.results);
+        const totalCount = response.data.count;
+        setTotalPages(getPageCount(totalCount, limit));
+        setNextPage(response.data.next);
+        setPrevPage(response.data.prev);
     })
+
 
     useEffect( () => {
         fetchRides();
@@ -51,8 +64,21 @@ function App() {
             }
             {isRideListLoading
                 ? <div style={{display: 'flex', justifyContent: 'center'}}><Loader/></div>
-                :<RideList remove={removeRide} orders={sortedAndSearchedRides} title="Список поездок"/>
+                : <RideList remove={removeRide} orders={sortedAndSearchedRides} title="Список поездок"/>
             }
+            <div className="page__wrapper">
+                <span className="page">PREV</span>
+                {pagesArray.map(p =>
+                    <span
+                        onClick={ () => setPage(p) }
+                        key={p}
+                        className={page === p ? 'page page__current' : 'page'}
+                    >
+                        {p}
+                    </span>
+                )}
+                <span className="page">NEXT</span>
+            </div>
         </div>
     );
 }

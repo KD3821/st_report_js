@@ -19,7 +19,7 @@ const RideForm = ({create}) => {
         create(newRide)
         setRide({
             number: '',
-            date: '',
+            shift: '',
             price: '',
             car: '',
             driver: ''

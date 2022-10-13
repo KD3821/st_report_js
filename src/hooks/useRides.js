@@ -8,7 +8,6 @@ export const useSortedRides = (rides, sort) => {
         }
         return rides;
     }, [sort, rides])
-
     return sortedRides;
 }
 

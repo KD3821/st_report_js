@@ -40,3 +40,17 @@
     transform: translateX(-350px);
     transition: all 500ms ease-in;
 }
+.page__wrapper {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+.page {
+    padding: 5px;
+    border: 1px solid midnightblue;
+    cursor: pointer;
+}
+.page__current {
+    border: 2px solid orchid;
+    font-weight: bold;
+}
