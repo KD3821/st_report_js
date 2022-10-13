@@ -17,7 +17,7 @@ const RideFilter = ({filter, setFilter} ) => {
                 options={[
                     {value: 'driver', name: 'По водителю'},
                     {value: 'car', name: 'По авто'},
-                    {value: 'date', name: 'По дате'}
+                    {value: 'date', name: 'По дате'} // не работает сортировка по дате
                 ]}
             />
         </div>

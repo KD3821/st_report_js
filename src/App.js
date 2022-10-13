@@ -1,33 +1,28 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import './styles/App.css';
 import RideList from "./components/RideList";
 import RideForm from "./components/RideForm";
 import RideFilter from "./components/RideFilter";
 import MyModal from "./components/UI/MyModal/MyModal";
 import MyButton from "./components/UI/button/MyButton";
+import {useRides} from "./hooks/useRides";
+import RideService from "./API/RideService";
+import Loader from "./components/UI/Loader/Loader";
+import {useFetching} from "./hooks/useFetching";
 
 function App() {
-    const [rides, setRides] = useState([
-        { id: 1, number: '0001', date: '2022-08-07', price: 1090, car: 'M129KH198', driver: 'Дементьев'},
-        { id: 2, number: '0002', date: '2022-08-07', price: 1500, car: 'E212HB198', driver: 'Павлюченков'},
-        { id: 3, number: '0003', date: '2022-08-07', price: 890, car: 'E975MK198', driver: 'Шевнин'},
-    ])
-
+    const [rides, setRides] = useState([])
     const [filter, setFilter] = useState({ sort: '', query: ''})
     const [modal, setModal] = useState(false);
+    const sortedAndSearchedRides = useRides(rides, filter.sort, filter.query);
+    const [fetchRides, isRideListLoading, rideError] = useFetching( async () => {
+        const rides = await RideService.getAll();
+        setRides(rides)
+    })
 
-    const sortedRides = useMemo( () => {
-        console.log('работает сортировка')
-        if(filter.sort) {
-            return [...rides].sort((a,b) => a[filter.sort].localeCompare(b[filter.sort]))
-        }
-        return rides;
-    }, [filter.sort, rides])
-
-    const sortedAndSearchedRides = useMemo( () => {
-        console.log('работает поиск')
-        return sortedRides.filter(ride => ride.driver.toLowerCase().includes(filter.query))
-    }, [filter.query, sortedRides])
+    useEffect( () => {
+        fetchRides();
+    }, [])
 
     const createRide = (newRide) => {
         setRides([...rides, newRide])
@@ -51,7 +46,13 @@ function App() {
                 setFilter={setFilter}
             />
             <hr style={{margin: '15px 0'}}/>
-            <RideList remove={removeRide} orders={sortedAndSearchedRides} title="Список поездок"/>
+            {rideError &&
+                <h4 style={{display: 'flex', justifyContent: 'center'}}>Произошла ошибка ${rideError}</h4>
+            }
+            {isRideListLoading
+                ? <div style={{display: 'flex', justifyContent: 'center'}}><Loader/></div>
+                :<RideList remove={removeRide} orders={sortedAndSearchedRides} title="Список поездок"/>
+            }
         </div>
     );
 }
