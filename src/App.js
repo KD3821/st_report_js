@@ -10,6 +10,7 @@ import RideService from "./API/RideService";
 import Loader from "./components/UI/Loader/Loader";
 import {useFetching} from "./hooks/useFetching";
 import {getPageCount, getPagesArray} from "./utils/pages";
+import Pagination from "./components/UI/pagination/Pagination";
 
 function App() {
     const [rides, setRides] = useState([])
@@ -21,10 +22,9 @@ function App() {
     const [nextPage, setNextPage] = useState(null);
     const [prevPage, setPrevPage] = useState(null);
     const sortedAndSearchedRides = useRides(rides, filter.sort, filter.query);
-    let pagesArray = getPagesArray(totalPages)
 
     const [fetchRides, isRideListLoading, rideError] = useFetching( async () => {
-        const response = await RideService.getAll();
+        const response = await RideService.getAll(page);
         setRides(response.data.results);
         const totalCount = response.data.count;
         setTotalPages(getPageCount(totalCount, limit));
@@ -35,7 +35,7 @@ function App() {
 
     useEffect( () => {
         fetchRides();
-    }, [])
+    }, [page])
 
     const createRide = (newRide) => {
         setRides([...rides, newRide])
@@ -43,6 +43,9 @@ function App() {
     }
     const removeRide = (ride) => {
         setRides(rides.filter(r => r.id !== ride.id))
+    }
+    const changePage = (page) => {
+        setPage(page);
     }
 
     return (
@@ -66,19 +69,11 @@ function App() {
                 ? <div style={{display: 'flex', justifyContent: 'center'}}><Loader/></div>
                 : <RideList remove={removeRide} orders={sortedAndSearchedRides} title="Список поездок"/>
             }
-            <div className="page__wrapper">
-                <span className="page">PREV</span>
-                {pagesArray.map(p =>
-                    <span
-                        onClick={ () => setPage(p) }
-                        key={p}
-                        className={page === p ? 'page page__current' : 'page'}
-                    >
-                        {p}
-                    </span>
-                )}
-                <span className="page">NEXT</span>
-            </div>
+            <Pagination
+                page={page}
+                changePage={changePage}
+                totalPages={totalPages}
+            />
         </div>
     );
 }
