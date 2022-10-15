@@ -54,3 +54,7 @@
     border: 2px solid orchid;
     font-weight: bold;
 }
+.driver {
+    width: 300px;
+    color: red;
+}
