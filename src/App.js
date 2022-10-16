@@ -1,28 +1,16 @@
 import React from 'react';
 import './styles/App.css';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import Drivers from "./pages/Drivers";
-import Rides from "./pages/Rides";
-import Root from "./pages/Root";
+import {RouterProvider} from "react-router-dom";
+import {Arouter, Nrouter} from "./components/AppRouter";
 
-const router = createBrowserRouter([
-    {
-        path:"/",
-        element: <Root />
-    },
-    {
-        path: "/drivers",
-        element: <Drivers />,
-    },
-    {
-        path: "/rides",
-        element: <Rides />,
-    },
-]);
 
 function App() {
+    const isAuth = true;
     return (
-        <RouterProvider router={router}/>
+        isAuth
+            ? <RouterProvider router={Arouter}/>
+            : <RouterProvider router={Nrouter}/>
+
     )
 }
 

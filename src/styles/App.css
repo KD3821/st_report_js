@@ -9,7 +9,7 @@
     justify-content: center;
 }
 
-.App {
+.Rides {
     width: 800px;
 }
 
@@ -25,7 +25,9 @@
 .remove-btn {
     margin-right: 0.5rem;
 }
-
+.ride__btns {
+    display: flex;
+}
 .ride-enter {
     transform: translateX(-350px)
 }
@@ -57,4 +59,12 @@
 .driver {
     width: 300px;
     color: red;
+}
+.mynavbar {
+    width: 800px;
+    background: lightgrey;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

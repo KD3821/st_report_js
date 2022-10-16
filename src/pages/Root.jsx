@@ -1,12 +1,15 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import Navbar from "../components/UI/Navbar/Navbar";
+
 
 const Root = () => {
-
     return (
         <div>
-            <Link to={`rides`} >Поездки</Link>
-            <Link to={`drivers`} >Водители</Link>
+            <Navbar />
+            <div id="detail">
+                <Outlet />
+            </div>
         </div>
     );
 };

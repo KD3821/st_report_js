@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useEffect} from 'react';
-import RideList from "../components/RideList";
-import RideForm from "../components/RideForm";
-import RideFilter from "../components/RideFilter";
+import RideList from "../components/Rides/RideList";
+import RideForm from "../components/Rides/RideForm";
+import RideFilter from "../components/Rides/RideFilter";
 import MyModal from "../components/UI/MyModal/MyModal";
 import MyButton from "../components/UI/button/MyButton";
 import {useRides} from "../hooks/useRides";
@@ -48,7 +48,7 @@ function Rides() {
     }
 
     return (
-        <div className="App">
+        <div className="Rides">
             <MyButton style={{marginTop: 30}} onClick={() => setModal(true)}>
                 Создать поездку
             </MyButton>
