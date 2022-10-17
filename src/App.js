@@ -1,16 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './styles/App.css';
-import {RouterProvider} from "react-router-dom";
-import {Arouter, Nrouter} from "./components/AppRouter";
+import AppRouter from "./components/AppRouter";
+import {AuthContext} from "./context";
+import {BrowserRouter} from "react-router-dom";
 
 
 function App() {
-    const isAuth = true;
-    return (
-        isAuth
-            ? <RouterProvider router={Arouter}/>
-            : <RouterProvider router={Nrouter}/>
+    const [isAuth, setIsAuth] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
+    useEffect( () => {
+        if(localStorage.getItem('auth')) {
+            setIsAuth(true);
+        }
+        setIsLoading(false);
+    }, [])
+
+    return (
+        <AuthContext.Provider value={{
+            isAuth,
+            setIsAuth,
+            isLoading
+        }}>
+            <AppRouter/>
+        </AuthContext.Provider>
     )
 }
 

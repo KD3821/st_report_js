@@ -5,7 +5,6 @@ import {useNavigate} from 'react-router-dom';
 
 const RideItem = (props) => {
     const navigate = useNavigate();
-    console.log(navigate);
 
     return (
         <div className="ride">
